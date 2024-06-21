@@ -74,4 +74,48 @@ function game() {
 
 }
 
-game();
+document.addEventListener('DOMContentLoaded', () => {
+    let scorePlayer = 0;
+    let scoreComputer = 0;
+    const choices = document.querySelectorAll('.choice');
+    const resultText = document.getElementById('result-text');
+    const score = document.getElementById('score');
+    const winner = document.getElementById('winner');
+
+    choices.forEach(choice => {
+        choice.addEventListener('click', () => {
+            const playerChoice = choice.id;
+            let result = playRound(playerChoice, getComputerChoice());
+            let winOrLose = result.slice(0, 5);
+
+
+            if (winOrLose === 'You W') {
+                scorePlayer++;
+            } else if (winOrLose === 'You L') {
+                scoreComputer++;
+            } else if (winOrLose === 'TIE p') {
+            } else {
+                console.log(result);
+            }
+
+            resultText.textContent = result;
+            score.textContent = "You " + scorePlayer + " Computer " + scoreComputer;
+
+            if (scorePlayer === 5) {
+                winner.textContent = "You Win :)";
+                scorePlayer = 0;
+                scoreComputer = 0;
+            } else if (scoreComputer === 5) {
+                winner.textContent = "You Lose :("
+                scorePlayer = 0;
+                scoreComputer = 0;
+            } else {
+                winner.textContent = "";
+            }
+
+        });
+    });
+
+});
+
+// game();
